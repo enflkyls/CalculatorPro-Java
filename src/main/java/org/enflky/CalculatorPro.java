@@ -8,8 +8,8 @@ public class CalculatorPro {
         Scanner type = new Scanner(System.in);
         System.out.println("Basic Calculator: 1");
         System.out.println("Root calculator: 2");
-        System.out.println("Double & Even Cheker: 3");
-        System.out.println("Factorial Calculator: 4");
+        System.out.println("Factorial Calculator: 3");
+        System.out.println("Double & Even Cheker: 4");
         System.out.print("Please select your mode and type that mode code: ");
         boolean calcIsModeSelected=false;
         while(!(calcIsModeSelected)){
