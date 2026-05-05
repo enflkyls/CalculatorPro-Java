@@ -155,4 +155,19 @@ public class CalcStuff {
             System.out.print(oecalc_InputNumber + " is a odd number");
         }
     }
+    public static void PatternCalculator(){
+        Scanner pcalc_Input = new Scanner(System.in);
+        System.out.print("Enter the number you want start pattern from: ");
+        while (true) {
+            if (!pcalc_Input.hasNextInt()) {
+                System.out.println("Invalid input, Please enter a Valid Number...");
+                System.out.print("Enter the number you want start pattern from: ");
+            }
+            else {
+                long pcalcFirstInput = pcalc_Input.nextInt();
+                break;
+            }
+        }
+        System.out.print("Enter the number a number that pattern ends: ");
+    }
 }
