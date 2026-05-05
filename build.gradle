@@ -5,6 +5,14 @@ plugins {
 group = 'org.enflky'
 version = '1.0 Release'
 
+jar {
+    manifest {
+        attributes(
+                'Main-Class': 'org.enflky.CalculatorPro'
+        )
+    }
+}
+
 repositories {
     mavenCentral()
 }
