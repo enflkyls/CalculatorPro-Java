@@ -10,7 +10,7 @@ public class CalculatorPro {
         System.out.println("Root calculator: 2");
         System.out.println("Factorial Calculator: 3");
         System.out.println("Double & Even Cheker: 4");
-        System.out.println("Pattern Calculator: 5");
+        System.out.println("Pattern Calculator: 5 Broken");
         System.out.print("Please select your mode and type that mode code: ");
         boolean calcIsModeSelected=false;
         while(!(calcIsModeSelected)){

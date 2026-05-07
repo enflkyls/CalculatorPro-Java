@@ -4,27 +4,29 @@ import java.math.BigInteger;
 import java.util.Scanner;
 
 public class CalcStuff {
-    public static void BasicCalculator(){
-        Scanner bcalc_Input = new Scanner(System.in);
-        double bcalcFirst_InputNumber;
-        double bcalcSecond_InputNumber;
-        double bcalcOutputAnswer = 0;
-        char bcalcOperator = 0;
-        boolean bcalcCanOutputAnswer = true;
-        boolean bcalcIsOperatorCorrect = false;
-        System.out.print("Enter First Number: ");
+    public static double numberfind(String question,Scanner input){
+        System.out.print(question);
+        double number;
         while (true) {
-            if (!bcalc_Input.hasNextDouble()) {
+            if (!input.hasNextDouble()) {
                 System.out.println("Invalid input, Please enter a Valid Number...");
-                System.out.print("Enter First Number: ");
-                bcalc_Input.nextLine();
+                System.out.print(question);
+                input.nextLine();
             }
             else {
-                bcalcFirst_InputNumber = bcalc_Input.nextDouble();
-                System.out.print("Please enter a Operator: ");
+                number = input.nextDouble();
                 break;
             }
         }
+        return number;
+    }
+
+    public static void BasicCalculator(){
+        Scanner bcalc_Input = new Scanner(System.in);
+        double bcalcFirst_InputNumber = numberfind("Enter First Number: ",bcalc_Input);
+        System.out.print("Please enter a Operator: ");
+        boolean bcalcIsOperatorCorrect = false;
+        char bcalcOperator = 0;
         while (!(bcalcIsOperatorCorrect)) {
             switch (bcalc_Input.next().charAt(0)) {
                 case '+':
@@ -53,23 +55,14 @@ public class CalcStuff {
                     bcalc_Input.nextLine();
             }
         }
-        System.out.print("Enter Second Number: ");
-        while (true) {
-            if (!bcalc_Input.hasNextDouble()) {
-                System.out.println("Invalid input, Please enter a Valid Number...");
-                System.out.print("Enter Second Number: ");
-                bcalc_Input.nextLine();
-            }
-            else  {
-                bcalcSecond_InputNumber = bcalc_Input.nextDouble();
-                break;
-            }
-        }
+        double bcalcSecond_InputNumber = numberfind("Enter Second Number: ",bcalc_Input);
         bcalc_Input.close();
+        boolean bcalcCanOutputAnswer = true;
         if (bcalcOperator == '/' && bcalcSecond_InputNumber == 0) {
             bcalcCanOutputAnswer = false;
             System.out.print("You cant divide by zero... ");
         }
+        double bcalcOutputAnswer = 0;
         switch(bcalcOperator) {
             case '+' -> bcalcOutputAnswer = bcalcFirst_InputNumber + bcalcSecond_InputNumber;
             case '-' -> bcalcOutputAnswer = bcalcFirst_InputNumber - bcalcSecond_InputNumber;
@@ -89,44 +82,21 @@ public class CalcStuff {
 
     public static void RootCalculator(){
         Scanner rcalc_Input = new Scanner(System.in);
-        double rcalc_InputNumber;
         double rcalcOutputAnswer;
-        boolean rcalcCanOutputAnswer = true;
         System.out.print("Enter the Number to find its square root: ");
-        while (true) {
-            if (!rcalc_Input.hasNextDouble()) {
-                System.out.println("Invalid input, Please enter a Valid Number...");
-                System.out.print("Enter the Number to find its square root: ");
-                rcalc_Input.nextLine();
-            }
-            else {
-                rcalc_InputNumber = rcalc_Input.nextDouble();
-                rcalcOutputAnswer= Math.sqrt(rcalc_InputNumber);
-                rcalc_Input.close();
-                break;
-            }
-        }
-        if (!(rcalcCanOutputAnswer)) {
-            System.out.println("Calculating.Error.Unexpected");
-        }
-        else {System.out.println("Square root of "+ rcalc_InputNumber +" is "+rcalcOutputAnswer);}
+        double rcalc_InputNumber = numberfind("Enter the Number to find its square root: ",rcalc_Input);
+        rcalcOutputAnswer = Math.sqrt(rcalc_InputNumber);
+        rcalc_Input.close();
+        System.out.println("Square root of "+ rcalc_InputNumber+" is "+rcalcOutputAnswer);
     }
     public static void FactorialCalculator(){
         Scanner fcalc_Input = new Scanner(System.in);
-        BigInteger fcalc_InputNumber = new BigInteger("0");
         BigInteger fcalc_OutputAnswer = new BigInteger("1");
-        boolean fcalcCanOutputAnswer = true;
-        System.out.print("Enter the Number to find its factorial: ");
-        while (true) {
-            if (!fcalc_Input.hasNextBigInteger()) {
-                System.out.println("Invalid input, Please enter a Valid Number...");
-                System.out.print("Enter the Number to find its factorial: ");
-                fcalc_Input.nextLine();
-            }
-            else  {
-                fcalc_InputNumber = fcalc_Input.nextBigInteger();
-                break;
-            }
+        int fcalc_PreInputNumber = (int) numberfind("Enter the Number to find its factorial: ", fcalc_Input);
+        BigInteger fcalc_InputNumber = BigInteger.valueOf(fcalc_PreInputNumber);
+        if (fcalc_InputNumber.equals(BigInteger.ZERO)) {
+            System.out.println("Invalid input, Factorial cant be zero...");
+                System.exit(0);
         }
         for (BigInteger i=new BigInteger("1") ;i.compareTo(fcalc_InputNumber) <= 0;i =i.add(BigInteger.valueOf(1))) {
             fcalc_OutputAnswer = fcalc_OutputAnswer.multiply(i);
@@ -135,19 +105,8 @@ public class CalcStuff {
     }
     public static void OddEvenCalculator(){
         Scanner oecalc_Input = new Scanner(System.in);
-        int oecalc_InputNumber;
         System.out.print("Enter the Number to find its a odd or a even number: ");
-        while(true) {
-            if (!oecalc_Input.hasNextInt()) {
-                System.out.println("Invalid input, Please enter a Valid Integer...");
-                System.out.print("Enter the Number to find its a odd or a even number: ");
-                oecalc_Input.nextLine();
-            }
-            else{
-                oecalc_InputNumber = oecalc_Input.nextInt();
-                break;
-            }
-        }
+        int oecalc_InputNumber = (int) numberfind("Enter the Number to find its a odd or a even number: ",oecalc_Input);
         if  (oecalc_InputNumber % 2 == 0) {
             System.out.print(oecalc_InputNumber + " is a even number");
         }
@@ -157,6 +116,10 @@ public class CalcStuff {
     }
     public static void PatternCalculator(){
         Scanner pcalc_Input = new Scanner(System.in);
+        int pcalcStartInput;
+        long pcalcEndInput;
+        int pcalcIncraseValue;
+
         System.out.print("Enter the number you want start pattern from: ");
         while (true) {
             if (!pcalc_Input.hasNextInt()) {
@@ -164,10 +127,37 @@ public class CalcStuff {
                 System.out.print("Enter the number you want start pattern from: ");
             }
             else {
-                long pcalcFirstInput = pcalc_Input.nextInt();
+                pcalcStartInput = pcalc_Input.nextInt();
                 break;
             }
         }
         System.out.print("Enter the number a number that pattern ends: ");
+        while (true) {
+            if (!pcalc_Input.hasNextLong()) {
+                System.out.println("Invalid input, Please enter a Valid Number...");
+                System.out.print("Enter the number a number that pattern ends: ");
+            }
+            else  {
+                pcalcEndInput = pcalc_Input.nextLong();
+                break;
+            }
+        }
+        System.out.print("Enter the number you want pattern to incrase: ");
+        while (true) {
+            if (!pcalc_Input.hasNextInt()) {
+                System.out.println("Invalid input, Please enter a Valid Number...");
+                System.out.print("Enter the number you want pattern to incrase: ");
+            }
+            else {
+                pcalcIncraseValue = pcalc_Input.nextInt();
+                break;
+            }
+        }
+        System.out.print("Pattern starts from "+pcalcStartInput+" and ends at "+pcalcEndInput+" and incrase by "+pcalcIncraseValue);
+        pcalc_Input.close();
+        for (int i = pcalcStartInput;i<=pcalcEndInput;i += pcalcIncraseValue) {
+            System.out.print(i);
+        }
+
     }
 }
