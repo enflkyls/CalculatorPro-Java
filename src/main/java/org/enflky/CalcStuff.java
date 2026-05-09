@@ -1,10 +1,12 @@
 package org.enflky;
 
+import javax.swing.*;
 import java.math.BigInteger;
 import java.util.Scanner;
 
 public class CalcStuff {
     public static double numberfind(String question,Scanner input){
+        //dont repeat yourself method
         System.out.print(question);
         double number;
         while (true) {
@@ -22,6 +24,66 @@ public class CalcStuff {
     }
 
     public static void BasicCalculator(){
+        Scanner bcalc_Input = new Scanner(System.in);
+        int bcalcFirst_InputNumber = (int) numberfind("Enter First Number: ",bcalc_Input);
+        System.out.print("Please enter a Operator: ");
+        boolean bcalcIsOperatorCorrect = false;
+        char bcalcOperator = 0;
+        while (!(bcalcIsOperatorCorrect)) {
+            switch (bcalc_Input.next().charAt(0)) {
+                case '+':
+                    bcalcOperator = '+';
+                    bcalcIsOperatorCorrect = true;
+                    break;
+                case '-':
+                    bcalcOperator = '-';
+                    bcalcIsOperatorCorrect = true;
+                    break;
+                case '*':
+                    bcalcOperator = '*';
+                    bcalcIsOperatorCorrect = true;
+                    break;
+                case '/':
+                    bcalcOperator = '/';
+                    bcalcIsOperatorCorrect = true;
+                    break;
+                case '^':
+                    bcalcOperator = '^';
+                    bcalcIsOperatorCorrect = true;
+                    break;
+                default:
+                    System.out.println("Invalid input, you can only input these oparetors '+,-,*,/,^'");
+                    System.out.print("Please enter a Operator: ");
+                    bcalc_Input.nextLine();
+            }
+        }
+        int bcalcSecond_InputNumber = (int) numberfind("Enter Second Number: ",bcalc_Input);
+        bcalc_Input.close();
+        boolean bcalcCanOutputAnswer = true;
+        if (bcalcOperator == '/' && bcalcSecond_InputNumber == 0) {
+            bcalcCanOutputAnswer = false;
+            System.out.print("You cant divide by zero... ");
+        }
+        int bcalcOutputAnswer = 0;
+        switch(bcalcOperator) {
+            case '+' -> bcalcOutputAnswer = bcalcFirst_InputNumber + bcalcSecond_InputNumber;
+            case '-' -> bcalcOutputAnswer = bcalcFirst_InputNumber - bcalcSecond_InputNumber;
+            case '*' -> bcalcOutputAnswer = bcalcFirst_InputNumber * bcalcSecond_InputNumber;
+            case '/' -> bcalcOutputAnswer = (int) bcalcFirst_InputNumber / bcalcSecond_InputNumber;
+            case '^' -> bcalcOutputAnswer = (int) Math.pow(bcalcFirst_InputNumber, bcalcSecond_InputNumber);
+            default -> bcalcCanOutputAnswer = false;
+        }
+        if (bcalcCanOutputAnswer) {
+            System.out.print(bcalcFirst_InputNumber +" "+ bcalcOperator +" "+ bcalcSecond_InputNumber +" = "+ bcalcOutputAnswer);
+            System.out.println(" Answer is : "+ bcalcOutputAnswer);
+        }
+        else {
+            //this error should not posible to get it..  or is it?
+            System.out.println("Calculating.Error.Unexpected");
+        }
+    }
+    //dont repeat yourself isnt working here i can make it work but im lazy maybe in future
+    public static void AdvancedCalculator(){
         Scanner bcalc_Input = new Scanner(System.in);
         double bcalcFirst_InputNumber = numberfind("Enter First Number: ",bcalc_Input);
         System.out.print("Please enter a Operator: ");
@@ -76,6 +138,7 @@ public class CalcStuff {
             System.out.println(" Answer is : "+ bcalcOutputAnswer);
         }
         else {
+            //this error should not posible to get it..  or is it?
             System.out.println("Calculating.Error.Unexpected");
         }
     }
@@ -90,19 +153,20 @@ public class CalcStuff {
         System.out.println("Square root of "+ rcalc_InputNumber+" is "+rcalcOutputAnswer);
     }
     public static void FactorialCalculator(){
+        //new way to calculate Factorials hehe
         Scanner fcalc_Input = new Scanner(System.in);
         BigInteger fcalc_OutputAnswer = new BigInteger("1");
         int fcalc_PreInputNumber = (int) numberfind("Enter the Number to find its factorial: ", fcalc_Input);
         BigInteger fcalc_InputNumber = BigInteger.valueOf(fcalc_PreInputNumber);
-        if (fcalc_InputNumber.equals(BigInteger.ZERO)) {
-            System.out.println("Invalid input, Factorial cant be zero...");
-                System.exit(0);
-        }
-        for (BigInteger i=new BigInteger("1") ;i.compareTo(fcalc_InputNumber) <= 0;i =i.add(BigInteger.valueOf(1))) {
-            fcalc_OutputAnswer = fcalc_OutputAnswer.multiply(i);
-        }
-        System.out.println("Factoriel of "+fcalc_InputNumber+" is "+fcalc_OutputAnswer);
+        fcalc_OutputAnswer = Factorial(fcalc_InputNumber);
+        System.out.println("Factorial of "+ fcalc_InputNumber+" is "+ fcalc_OutputAnswer);
     }
+    public static BigInteger Factorial(BigInteger n){
+        //A LOT of MESS but it works :D
+        if  ((n.subtract(BigInteger.valueOf(1))).equals(BigInteger.valueOf(0)) || n.equals(BigInteger.valueOf(0))){ return new BigInteger("1");}
+        else {return n.multiply(Factorial(n.subtract(BigInteger.valueOf(1))));}
+    }
+
     public static void OddEvenCalculator(){
         Scanner oecalc_Input = new Scanner(System.in);
         System.out.print("Enter the Number to find its a odd or a even number: ");
